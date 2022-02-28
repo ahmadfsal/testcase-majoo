@@ -22,10 +22,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: BlocProvider(
-        create: (context) =>
-        AuthBlocCubit(
-        )
-          ..fetch_history_login(),
+        create: (context) => AuthBlocCubit()..fetchHistoryLogin(),
         child: MyHomePageScreen(),
       ),
     );
@@ -37,28 +34,18 @@ class MyHomePageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBlocCubit, AuthBlocState>(
-        builder: (context, state)
-        {
-          if(state is AuthBlocLoginState)
-          {
-            return LoginPage();
-          }
-          else if(state is AuthBlocLoggedInState)
-          {
-            return BlocProvider(
-              create: (context) =>
-              HomeBlocCubit(
-              )
-                ..fetching_data(),
-              child: HomeBlocScreen(),
-            );
-          }
+    return BlocBuilder<AuthBlocCubit, AuthBlocState>(builder: (context, state) {
+      if (state is AuthBlocLoginState) {
+        return LoginPage();
+      } else if (state is AuthBlocLoggedInState) {
+        return BlocProvider(
+          create: (context) => HomeBlocCubit()..fetchingData(),
+          child: HomeBlocScreen(),
+        );
+      }
 
-          return Center(child: Text(
-              kDebugMode?"state not implemented $state": ""
-          ));
-        });
+      return Center(
+          child: Text(kDebugMode ? "state not implemented $state" : ""));
+    });
   }
 }
-

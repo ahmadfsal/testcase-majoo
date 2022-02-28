@@ -7,8 +7,6 @@ import 'package:majootestcase/common/widget/text_form_field.dart';
 import 'package:majootestcase/models/user.dart';
 import 'package:majootestcase/ui/home_bloc/home_bloc_screen.dart';
 
-
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -31,12 +29,12 @@ class _LoginState extends State<LoginPage> {
     return Scaffold(
       body: BlocListener<AuthBlocCubit, AuthBlocState>(
         listener: (context, state) {
-          if(state is AuthBlocLoggedInState){
+          if (state is AuthBlocLoggedInState) {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (_) => BlocProvider(
-                  create: (context) => HomeBlocCubit()..fetching_data(),
+                  create: (context) => HomeBlocCubit()..fetchingData(),
                   child: HomeBlocScreen(),
                 ),
               ),
@@ -134,9 +132,7 @@ class _LoginState extends State<LoginPage> {
     return Align(
       alignment: Alignment.center,
       child: TextButton(
-        onPressed: () async {
-
-        },
+        onPressed: () async {},
         child: RichText(
           text: TextSpan(
               text: 'Belum punya akun? ',
@@ -156,15 +152,13 @@ class _LoginState extends State<LoginPage> {
     final _password = _passwordController.value;
     if (formKey.currentState?.validate() == true &&
         _email != null &&
-        _password != null
-       ) {
-
+        _password != null) {
       AuthBlocCubit authBlocCubit = AuthBlocCubit();
       User user = User(
-          email: _email,
-          password: _password,
+        email: _email,
+        password: _password,
       );
-      authBlocCubit.login_user(user);
+      authBlocCubit.loginUser(user);
     }
   }
 }

@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 
 import 'form_field.dart';
 
@@ -77,7 +75,7 @@ class _CustomTextForm extends StatefulWidget {
   final Widget suffixIcon;
 
   const _CustomTextForm({
-     this.state,
+    this.state,
     this.controller,
     this.label,
     this.hint,
@@ -150,7 +148,7 @@ class _CustomTextFormState extends State<_CustomTextForm> {
                   Stack(
                     children: <Widget>[
                       if (widget.controller?.textController == null ||
-                          widget.controller?.textController.text.isEmpty ==
+                          widget.controller?.textController?.text?.isEmpty ==
                               true)
                         Positioned(
                             top: _label != null
@@ -195,13 +193,13 @@ class _CustomTextFormState extends State<_CustomTextForm> {
                               alignLabelWithHint: true,
                               suffixIcon: _focusNode.hasFocus
                                   ? widget.suffixIcon ??
-                                  IconButton(
-                                    icon: const Icon(Icons.cancel),
-                                    onPressed: () {
-                                      widget.controller?.textController
-                                          .clear();
-                                    },
-                                  )
+                                      IconButton(
+                                        icon: const Icon(Icons.cancel),
+                                        onPressed: () {
+                                          widget.controller?.textController
+                                              ?.clear();
+                                        },
+                                      )
                                   : null),
                           obscureText: widget.isObscureText,
                         ),
