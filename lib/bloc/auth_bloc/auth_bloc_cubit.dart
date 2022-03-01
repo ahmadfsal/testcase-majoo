@@ -54,15 +54,7 @@ class AuthBlocCubit extends Cubit<AuthBlocState> {
           content: Text('Login Berhasil'),
         ));
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => BlocProvider(
-              create: (context) => HomeBlocCubit(connectivity: connectivity),
-              child: HomeBlocScreen(),
-            ),
-          ),
-        );
+        gotoHomepage(context, connectivity);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Login gagal, periksa kembali inputan anda'),
@@ -72,6 +64,7 @@ class AuthBlocCubit extends Cubit<AuthBlocState> {
   }
 
   void registerUser(User user, BuildContext context) async {
+    Connectivity connectivity = Connectivity();
     DatabaseHelper db = DatabaseHelper.instance;
     int? result = await db.insert(user);
 
@@ -79,7 +72,7 @@ class AuthBlocCubit extends Cubit<AuthBlocState> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Register Berhasil'),
       ));
-      Navigator.pop(context);
+      gotoHomepage(context, connectivity);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Email sudah terdaftar'),
@@ -100,6 +93,18 @@ class AuthBlocCubit extends Cubit<AuthBlocState> {
         builder: (_) => BlocProvider(
           create: (context) => AuthBlocCubit(),
           child: LoginPage(),
+        ),
+      ),
+    );
+  }
+
+  void gotoHomepage(BuildContext context, Connectivity connectivity) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => BlocProvider(
+          create: (context) => HomeBlocCubit(connectivity: connectivity),
+          child: HomeBlocScreen(),
         ),
       ),
     );
