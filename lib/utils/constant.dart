@@ -8,10 +8,14 @@ class Api {
   static const REGISTER = "/register";
 }
 
-class Font {
-}
+class Font {}
 
 class ScreenUtilConstants {
   static const width = 320.0;
   static const height = 640.0;
+}
+
+class StorageKeyConstant {
+  static String get isLoggedIn => 'is_logged_in';
+  static String get userValue => 'user_value';
 }

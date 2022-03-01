@@ -5,17 +5,17 @@ const InputDecoration defaultInputDecoration = InputDecoration();
 const Icon defaultPickerIcon = Icon(Icons.arrow_drop_down);
 
 abstract class CustomFormField<T> extends FormField<T> {
-  final CustomFormFieldController<T> controller;
+  final CustomFormFieldController<T>? controller;
 
   CustomFormField({
     this.controller,
-    T initialValue,
-    FormFieldBuilder<T> builder,
-    FormFieldValidator<T> validator,
-    FormFieldSetter<T> onSaved,
+    T? initialValue,
+    required FormFieldBuilder<T> builder,
+    FormFieldValidator<T>? validator,
+    FormFieldSetter<T>? onSaved,
     bool enabled = true,
     bool autoValidate = false,
-    Key key,
+    Key? key,
   }) : super(
             initialValue: controller != null ? controller.value : initialValue,
             builder: builder,
@@ -39,9 +39,7 @@ abstract class CustomFormFieldController<T> extends ChangeNotifier
 
   CustomFormFieldController(this._value) {
     final value = fromValue(_value);
-    if (value != null) {
-      textController.text = value;
-    }
+    textController.text = value;
   }
 
   void _initState(void Function(T value) didChange) {
@@ -65,7 +63,7 @@ abstract class CustomFormFieldController<T> extends ChangeNotifier
     _value = newValue;
     if (_value != null) {
       final text = fromValue(_value);
-      if (text != null && text != textController.text) {
+      if (text != textController.text) {
         textController.text = text;
       }
     } else {
@@ -85,9 +83,9 @@ abstract class CustomFormFieldController<T> extends ChangeNotifier
 }
 
 class CustomFormFieldState<T> extends FormFieldState<T> {
-  VoidCallback _listener;
+  late VoidCallback _listener;
 
-  CustomFormFieldController<T> get _controller => widget.controller;
+  CustomFormFieldController<T>? get _controller => widget.controller;
 
   @override
   CustomFormField<T> get widget => super.widget as CustomFormField<T>;
@@ -98,7 +96,7 @@ class CustomFormFieldState<T> extends FormFieldState<T> {
     _listener = () {
       final newValue = _controller?.value;
       if (value != newValue) {
-        didChange(newValue);
+        didChange(newValue!);
       }
     };
     _controller?._initState(didChange);
@@ -111,10 +109,8 @@ class CustomFormFieldState<T> extends FormFieldState<T> {
     if (_controller != oldWidget.controller) {
       oldWidget.controller?.removeListener(_listener);
       final _controller = this._controller;
-      if (_controller != null) {
-        _controller.addListener(_listener);
-        setValue(oldWidget.controller?.value);
-      }
+      _controller?.addListener(_listener);
+      setValue(oldWidget.controller?.value);
     }
   }
 
@@ -122,14 +118,14 @@ class CustomFormFieldState<T> extends FormFieldState<T> {
   void reset() {
     super.reset();
     setState(() {
-      _controller?.value = widget.initialValue;
+      _controller?.value = widget.initialValue!;
     });
   }
 
   @override
-  void didChange(T value) {
-    if (_controller == null || _controller?.value != value) {
-      _controller?.value = value;
+  void didChange(T? value) {
+    if (_controller?.value != value) {
+      _controller?.value = value!;
     }
 
     /// check mounted to prevent memory leak when setState after dispose

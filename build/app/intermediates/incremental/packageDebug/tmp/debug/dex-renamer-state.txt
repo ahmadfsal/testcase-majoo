@@ -1,4 +1,4 @@
-#Mon Feb 28 10:42:34 WIB 2022
+#Tue Mar 01 12:40:32 WIB 2022
 base.0=/Users/ittang/Downloads/testcase/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

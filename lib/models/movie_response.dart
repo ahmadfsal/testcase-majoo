@@ -1,17 +1,19 @@
 class MovieResponse {
   MovieResponse({
-    this.data,
-    this.query,
-    this.v,
+    required this.data,
+    required this.query,
+    required this.v,
   });
-  List<Data> data;
-  String query;
-  int v;
+  final List<Data> data;
+  final String query;
+  final int v;
+
   factory MovieResponse.fromJson(Map<String, dynamic> json) => MovieResponse(
         data: List<Data>.from(json["d"].map((x) => Data.fromJson(x))),
         query: json["q"],
         v: json["v"],
       );
+
   Map<String, dynamic> toJson() => {
         "d": List<dynamic>.from(data.map((x) => x.toJson())),
         "q": query,
@@ -21,27 +23,29 @@ class MovieResponse {
 
 class Data {
   Data({
-    this.i,
-    this.id,
-    this.l,
-    this.q,
-    this.rank,
-    this.s,
+    required this.i,
+    required this.id,
+    required this.l,
+    required this.q,
+    required this.rank,
+    required this.s,
     this.series,
     this.vt,
-    this.year,
+    required this.year,
     this.yr,
   });
-  I i;
-  String id;
-  String l;
-  String q;
-  int rank;
-  String s;
-  List<Series> series;
-  int vt;
-  int year;
-  String yr;
+
+  final I i;
+  final String id;
+  final String l;
+  final String q;
+  final int rank;
+  final String s;
+  final List<Series>? series;
+  final int? vt;
+  final int year;
+  final String? yr;
+
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         i: I.fromJson(json["i"]),
         id: json["id"],
@@ -56,6 +60,7 @@ class Data {
         year: json["y"],
         yr: json["yr"] == null ? null : json["yr"],
       );
+
   Map<String, dynamic> toJson() => {
         "i": i.toJson(),
         "id": id,
@@ -65,7 +70,7 @@ class Data {
         "s": s,
         "v": series == null
             ? null
-            : List<dynamic>.from(series.map((x) => x.toJson())),
+            : List<dynamic>.from(series!.map((x) => x.toJson())),
         "vt": vt == null ? null : vt,
         "y": year,
         "yr": yr == null ? null : yr,
@@ -74,18 +79,21 @@ class Data {
 
 class I {
   I({
-    this.height,
-    this.imageUrl,
-    this.width,
+    required this.height,
+    required this.imageUrl,
+    required this.width,
   });
-  int height;
-  String imageUrl;
-  int width;
+
+  final int height;
+  final String imageUrl;
+  final int width;
+
   factory I.fromJson(Map<String, dynamic> json) => I(
         height: json["height"],
         imageUrl: json["imageUrl"],
         width: json["width"],
       );
+
   Map<String, dynamic> toJson() => {
         "height": height,
         "imageUrl": imageUrl,
@@ -95,21 +103,24 @@ class I {
 
 class Series {
   Series({
-    this.i,
-    this.id,
-    this.l,
-    this.s,
+    required this.i,
+    required this.id,
+    required this.l,
+    required this.s,
   });
-  I i;
-  String id;
-  String l;
-  String s;
+
+  final I i;
+  final String id;
+  final String l;
+  final String s;
+
   factory Series.fromJson(Map<String, dynamic> json) => Series(
         i: I.fromJson(json["i"]),
         id: json["id"],
         l: json["l"],
         s: json["s"],
       );
+
   Map<String, dynamic> toJson() => {
         "i": i.toJson(),
         "id": id,

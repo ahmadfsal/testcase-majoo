@@ -1,5 +1,6 @@
-import 'package:majootestcase/ui/home_bloc/home_bloc_screen.dart';
-import 'package:majootestcase/ui/login/login_page.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:majootestcase/ui/home/home_bloc_screen.dart';
+import 'package:majootestcase/ui/auth/login_page.dart';
 import 'package:flutter/foundation.dart';
 import 'bloc/auth_bloc/auth_bloc_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,8 +30,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class MyHomePageScreen extends StatelessWidget {
-  const MyHomePageScreen({Key key}) : super(key: key);
+  MyHomePageScreen({Key? key}) : super(key: key);
+  final connectivity = Connectivity();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class MyHomePageScreen extends StatelessWidget {
         return LoginPage();
       } else if (state is AuthBlocLoggedInState) {
         return BlocProvider(
-          create: (context) => HomeBlocCubit()..fetchingData(),
+          create: (context) => HomeBlocCubit(connectivity: connectivity),
           child: HomeBlocScreen(),
         );
       }
